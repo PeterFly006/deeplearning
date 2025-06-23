@@ -37,9 +37,10 @@ network = keras.Sequential([
 
 network.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# history = network.fit(train_images, train_labels, epochs=5, batch_size=128)
+history = network.fit(train_images, train_labels, epochs=5, batch_size=128)
 # plt.plot(history.history['accuracy'])
 # plt.show()
+# exit()
 
 #calculate metrics on test data to see how good the model is performing
 metrics = network.evaluate(test_images, test_labels)
@@ -50,10 +51,12 @@ test_predictions = np.argmax(test_probs, axis=1)
 test_labels_argmax = np.argmax(test_labels, axis=1)
 f1 = f1_score(test_labels_argmax, test_predictions, average='weighted')
 
-print("Test loss:", metrics[0])
-print("Test accuracy:", metrics[1])
-print("F1 score:", f1)
+# print("Test loss:", metrics[0])
+# print("Test accuracy:", metrics[1])
+# print("F1 score:", f1)
 
-#using the model to predict values from the test data
-predictions = network.predict(test_images[0:10, :])
-print("Predictions:", predictions)
+# See a few results
+for i in range(len(test_predictions)):  # first 10 examples
+    print(f"Sample {i}: predicted={test_predictions[i]}, true={test_labels_argmax[i]}")
+
+# network.save('digit-model.h5')
